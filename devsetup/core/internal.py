@@ -1,0 +1,7 @@
+# -*- coding:utf8 -*-
+
+import os
+
+def determine_project_folder(self,script_filename):
+	project_folder = os.path.dirname(os.path.abspath(script_filename))
+	return project_folder
