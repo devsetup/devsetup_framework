@@ -1,26 +1,59 @@
 # -*- coding:utf8 -*-
 
-from devsetup import devsetup
 import subprocess
 import sys
 
-class usingShell:
+from Log import Log
+import devsetup
+
+class UsingShell:
 	def __init__(self, step):
 		self.step = step
 
-	def run(self, cmd):
+	def get_output_from_command(self, cmd, cwd=None):
+		# are we changing folders first?
+		if cwd:
+			popd = devsetup.UsingFs(self.step).pushd(cwd)
+
 		# make sure there is a record of what we are doing
-		devsetup.usingLog(self.step).command_start(cmd)
+		self.step.log_command_start(cmd)
 
 		# run the command
-		retval = subprocess.call(cmd, stdout=devsetup.LOG_STDOUT, stderr=devsetup.LOG_STDERR)
+		p1 = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+		# get the output
+		output = p1.communicate()
+
+		# put a copy of the output in the log file
+		self.step.log_command_output(output)
+		self.step.log_command_result(p1.returncode)
+
+		# did we run this in a different folder?
+		if cwd:
+			devsetup.UsingFs(self.step).popd(popd)
+
+		# all done
+		return output
+
+	def run(self, cmd, cwd=None):
+		# are we changing folders first?
+		if cwd:
+			popd = devsetup.UsingFs(self.step).pushd(cwd)
+
+		# make sure there is a record of what we are doing
+		self.step.log_command_start(cmd)
+
+		# run the command
+		retval = subprocess.call(cmd, stdout=Log.LOG_STDOUT, stderr=Log.LOG_STDERR)
 
 		# make sure there's a record of the command's exit code
-		devsetup.usingLog(self.step).command_result(retval)
+		self.step.log_command_result(retval)
 
 		# now what do we do?
 		if retval == 0:
 			# the command succeeded
+			if cwd:
+				devsetup.UsingFs(self.step).popd(popd)
 			return
 
 		# if we get here, then the command failed :(

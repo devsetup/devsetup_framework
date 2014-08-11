@@ -1,10 +1,10 @@
 # welcome to dev_setup
 
 from __future__ import print_function
-from devsetup.vendor import terminal
+from vendor import terminal
 import sys
 
-class usingConsole:
+class UsingConsole:
 	def __init__(self, step):
 		self.step = step
 
