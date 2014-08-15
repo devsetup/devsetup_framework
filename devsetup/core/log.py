@@ -3,6 +3,7 @@
 import io
 import os
 import sys
+import traceback
 
 LOG_STDOUT=sys.stdout
 LOG_STDERR=sys.stderr
@@ -84,6 +85,12 @@ def log_comment_result(msg):
 
 	if logging_to_file:
 		LOG_STDOUT.write(unicode("# ... " + msg + "\n\n"))
+
+def log_last_exception():
+	if logging_to_file:
+		LOG_STDOUT.write(unicode("This resulted in the following exception:\n\n"))
+		output = traceback.format_exc()
+		LOG_STDOUT.write(unicode(output))
 
 def log_new_operation(operation):
 	global LOG_STDOUT

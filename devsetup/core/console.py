@@ -13,6 +13,10 @@ def start_new_line():
 
 	# all done
 
+def print_blank_line():
+	start_new_line()
+	print()
+
 def print_bullet():
 	sys.stdout.write(terminal.colorize("* ", "yellow", "reset", "bright"))
 
@@ -45,4 +49,11 @@ def print_skip():
 def print_result(result, color, lum='normal'):
 	sys.stdout.write('[')
 	sys.stdout.write(terminal.colorize(result, color, lum=lum))
-	print(']')
+	sys.stdout.write("]\n")
+	sys.stdout.flush()
+
+def print_see_logfile():
+	sys.stdout.write("See ")
+	sys.stdout.write(terminal.colorize("devsetup.log", "red", lum="bright"))
+	sys.stdout.write(" for details of what went wrong.\n")
+	sys.stdout.flush()

@@ -1,7 +1,7 @@
 # welcome to devsetup
 
 from __future__ import print_function
-
+import sys
 from devsetup.core import console, log
 
 class Step:
@@ -22,9 +22,19 @@ class Step:
 	def __enter__(self):
 		return self
 
-	def __exit__(self, type, value, traceback):
-		if type is None:
+	def __exit__(self, etype, value, traceback):
+		if not etype:
 			self.okay()
+			return
+
+		# if we get here, something went wrong
+		self.fail()
+		log.log_last_exception()
+
+		if log.logging_to_file:
+			console.print_blank_line()
+			console.print_see_logfile()
+		sys.exit(1)
 
 	def okay(self, msg=''):
 		if log.logging_to_file:
