@@ -13,9 +13,6 @@ def chmod(target_file, perms):
 	os.chmod(target_file, perms)
 	log.log_command_result(0)
 
-def get_realpath(target_dir):
-	return os.path.realpath(target_dir)
-
 def ensure_folder_exists(target_dir):
 	# does the folder already exist?
 	log.log_comment("is '%s' a folder?" % target_dir)
@@ -28,20 +25,35 @@ def ensure_folder_exists(target_dir):
 	log.log_comment("is '%s' a folder?" % target_dir)
 	if os.isdir(parent):
 		log.log_comment_result("yes")
-
 		cmd = [ 'mkdir', target_dir ]
-		popd = pushd(parent)
-		shell.run(cmd)
-		popd(popd)
+		shell.run(cmd, cwd=parent)
+
+def get_realpath(target_dir):
+	return os.path.realpath(target_dir)
+
+def has_file(target_file):
+	return os.path.exists(target_file)
 
 def pushd(target_dir):
-	pop_dir = os.getcwd()
-	log.log_command_start(["cd",  "%s" % target_dir])
-	os.chdir(target_dir)
-	log.log_command_result(0)
-	return pop_dir
+	return Dir(target_dir)
 
-def popd(target_dir):
-	log.log_command_start(["cd",  "-"])
-	os.chdir(target_dir)
-	log.log_command_result(0)
+class Dir:
+	def __init__(self, folder=None):
+		if not folder:
+			folder = os.getcwd()
+		self.folder = folder
+		self.orig_folder = os.getcwd()
+
+	def __enter__(self):
+		if self.folder != self.orig_folder:
+			log.log_command_start(["cd",  "%s" % self.folder])
+			os.chdir(self.folder)
+			log.log_command_result(0)
+		return self
+
+	def __exit__(self, type, value, traceback):
+		if type is None:
+			if self.folder != self.orig_folder:
+				log.log_command_start(["cd",  "-"])
+				os.chdir(self.orig_folder)
+				log.log_command_result(0)
