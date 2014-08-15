@@ -6,3 +6,4 @@ import http
 import internal
 import log
 import shell
+import vagrant
