@@ -1,3 +1,4 @@
+import ansible
 import console
 import fs
 import git
