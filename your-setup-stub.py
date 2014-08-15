@@ -8,7 +8,7 @@ import time
 
 # special case - get the devsetup framework
 if not os.path.isdir("devsetup"):
-    subprocess.call(["git", "clone", "https://github.com:devsetup/devsetup.git"])
+    subprocess.call(["git", "clone", "https://github.com/devsetup/devsetup.git"])
 
 # load devsetup
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "devsetup"))
