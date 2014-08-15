@@ -10,10 +10,11 @@ class Step:
 		self.operation = msg
 
 		# tell the end-user what is happening
-		console.start_new_line()
-		console.print_bullet()
-		console.print_message(msg)
-		console.print_trail()
+		if log.logging_to_file:
+			console.start_new_line()
+			console.print_bullet()
+			console.print_message(msg)
+			console.print_trail()
 
 		# we'd better update the log file too
 		log.log_new_operation(msg)
@@ -26,19 +27,22 @@ class Step:
 			self.okay()
 
 	def okay(self, msg=''):
-		console.print_okay()
+		if log.logging_to_file:
+			console.print_okay()
 
 		# we'd better update the log file too
 		log.log_operation_okay(self.operation)
 
 	def skip(self, msg=''):
-		console.print_skip()
+		if log.logging_to_file:
+			console.print_skip()
 
 		# we'd better update the log file too
 		log.log_operation_skipped(self.operation)
 
 	def fail(self, msg=''):
-		console.print_fail()
+		if log.logging_to_file:
+			console.print_fail()
 
 		# we'd better update the log file too
 		log.log_operation_failed(self.operation)
