@@ -29,6 +29,12 @@ To submit a feature:
 1. Push your feature back to your clone
 1. Using GitHub, send us a Pull Request. Make sure it targets our __develop__ branch.
 
+Coding guidelines:
+
+* We've adopted [Google's Python coding guidelines](https://google-styleguide.googlecode.com/svn/trunk/pyguide.html) as our base guide.
+* Your code needs to work on Python 2.6.x and Python 2.7.x
+* Python3-compatibility is desirable
+
 ## License
 
 Devsetup is released under the 3-clause BSD license. See [LICENSE.txt](LICENSE.txt) for details.
