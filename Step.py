@@ -2,7 +2,7 @@
 
 from __future__ import print_function
 import sys
-from devsetup.core import console, log
+from core import console, log
 
 class Step:
 	def __init__(self, msg):
