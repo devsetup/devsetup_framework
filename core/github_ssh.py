@@ -23,7 +23,11 @@ def clone(user, repo, target_name=None, cwd=None, branch='master'):
 		cmd = ['git', 'clone', 'git@github.com:' + user + '/' + repo + '.git', target_name]
 
 		# run the command
-		dsf.core.shell.run(cmd, cwd=cwd)
+		retval = dsf.core.shell.run(cmd, cwd=cwd)
+
+		# what happened?
+		if retval != 0:
+			raise RuntimeError("git clone failed")
 
 	# are we on the right branch?
 	if dsf.core.git.get_current_branch(cwd=target_dir) != branch:

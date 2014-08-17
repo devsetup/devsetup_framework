@@ -33,12 +33,9 @@ def run(cmd, cwd=None):
 		# make sure there's a record of the command's exit code
 		dsf.core.log.log_command_result(retval)
 
-		# now what do we do?
-		if retval == 0:
-			return
-
-		# if we get here, then the command failed :(
-		raise RuntimeError
+		# let the caller raise the exception - it makes things much
+		# easier to understand when looking at the logs
+		return retval
 
 def run_with_passthru(cmd, cwd=None):
 	with dsf.core.fs.pushd(cwd):

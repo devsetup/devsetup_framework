@@ -62,7 +62,9 @@ def run_playbook(inv, private_key=None, user=None, cwd=None, playbook="site.yml"
 		cmd = cmd + [ "--user", user ]
 	cmd = cmd + [ playbook ]
 
-	dsf.core.shell.run(cmd, cwd=cwd)
+	retval = dsf.core.shell.run(cmd, cwd=cwd)
+	if retval != 0:
+		raise RuntimeError("Ansible provisioning failed")
 
 class Ansible_Inventory:
 	def __init__(self, groups = {}):
