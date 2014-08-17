@@ -110,6 +110,6 @@ class Ansible_Inventory:
 		* params: a list of any Ansible variables that you want to set
 		  for this host.
 		"""
-		if not self.groups[group]:
+		if not group in self.groups:
 			self.groups[group] = {}
 		self.groups[group][host] = params
