@@ -2,14 +2,14 @@
 
 import os
 import re
-import fs, shell
+import dsf
 
 def change_branch(branch, cwd=None):
 	# checkout the branch
-	shell.run(['git', 'checkout', branch], cwd=cwd)
+	dsf.core.shell.run(['git', 'checkout', branch], cwd=cwd)
 
 def get_current_branch(cwd=None):
-	output = shell.get_output_from_command(['git', 'branch'], cwd=cwd)
+	output = dsf.core.shell.get_output_from_command(['git', 'branch'], cwd=cwd)
 
 	for line in output:
 		if line[0:2] == '* ':
@@ -30,15 +30,15 @@ def is_repository(cwd=None):
 		return False
 
 	# is the folder a real git repo?
-	output = shell.get_output_from_command(['git', 'status'], cwd=cwd)
+	output = dsf.core.shell.get_output_from_command(['git', 'status'], cwd=cwd)
 
 	regex=re.compile("fatal: Not a git repository")
 	if any(regex.match(line) for line in output):
 		return False
 
 	# what about when self.repodir is a subfolder of a git repo?
-	output = shell.get_output_from_command(['git', 'rev-parse', '--show-toplevel'], cwd=cwd)
-	if output[0].rstrip() != fs.get_realpath(cwd):
+	output = dsf.core.shell.get_output_from_command(['git', 'rev-parse', '--show-toplevel'], cwd=cwd)
+	if output[0].rstrip() != dsf.core.fs.get_realpath(cwd):
 		return False
 
 	# if we get here, then it is a git repo

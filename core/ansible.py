@@ -1,7 +1,6 @@
 import os
 import tempfile
-import sys
-import log, shell
+import dsf
 
 def create_inventory(groups={}):
 	return Ansible_Inventory(groups)
@@ -18,7 +17,7 @@ def run_playbook(inv, private_key=None, user=None, cwd=None):
 		cmd = cmd + [ "--user", user ]
 	cmd = cmd + [ "site.yml" ]
 
-	shell.run(cmd, cwd=cwd)
+	dsf.core.shell.run(cmd, cwd=cwd)
 
 class Ansible_Inventory:
 	def __init__(self, groups = {}):

@@ -1,12 +1,12 @@
 # welcome to dev_setup
 
 from __future__ import print_function
-from dsf.vendor import terminal
+import dsf
 import sys
 
 def start_new_line():
 	# are we already at the start of a new line?
-	pos = terminal.cursor.pos()[1]
+	pos = dsf.core.terminal.cursor.pos()[1]
 	if pos != 1:
 		# no - so start a new line
 		print()
@@ -18,7 +18,7 @@ def print_blank_line():
 	print()
 
 def print_bullet():
-	sys.stdout.write(terminal.colorize("* ", "yellow", "reset", "bright"))
+	sys.stdout.write(dsf.core.terminal.colorize("* ", "yellow", "reset", "bright"))
 
 def print_message(msg):
 	# TODO - make this word-wrap so that longer strings don't make a
@@ -27,10 +27,10 @@ def print_message(msg):
 
 def print_trail():
 	# how wide is the console?
-	width = terminal.screen.cols()
+	width = dsf.core.terminal.screen.cols()
 
 	# how far across are we currently?
-	pos = terminal.cursor.pos()[1]
+	pos = dsf.core.terminal.cursor.pos()[1]
 
 	# now we know how long a trail to print
 	trail_length = width - pos - 8
@@ -48,12 +48,12 @@ def print_skip():
 
 def print_result(result, color, lum='normal'):
 	sys.stdout.write('[')
-	sys.stdout.write(terminal.colorize(result, color, lum=lum))
+	sys.stdout.write(dsf.core.terminal.colorize(result, color, lum=lum))
 	sys.stdout.write("]\n")
 	sys.stdout.flush()
 
 def print_see_logfile():
 	sys.stdout.write("See ")
-	sys.stdout.write(terminal.colorize("devsetup.log", "red", lum="bright"))
+	sys.stdout.write(dsf.core.terminal.colorize("devsetup.log", "red", lum="bright"))
 	sys.stdout.write(" for details of what went wrong.\n")
 	sys.stdout.flush()
