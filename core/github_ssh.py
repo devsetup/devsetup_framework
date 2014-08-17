@@ -20,8 +20,7 @@ def clone(user, repo, target_name=None, cwd=None, branch='master'):
 	# do we already have a Storyplayer repo in there?
 	if not dsf.core.git.is_repository(cwd=target_dir):
 		# build the command that we are running
-		cmd = ['git', 'clone', '-b', branch ]
-		cmd = cmd + ['git@github.com:' + user + '/' + repo + '.git', target_name]
+		cmd = ['git', 'clone', 'git@github.com:' + user + '/' + repo + '.git', target_name]
 
 		# run the command
 		dsf.core.shell.run(cmd, cwd=cwd)
