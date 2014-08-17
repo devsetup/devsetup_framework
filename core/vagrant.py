@@ -19,6 +19,14 @@ def stop(cwd=None, vms = ['default']):
 		# start vagrant
 		dsf.core.shell.run(["vagrant", "down"] + vms)
 
+def destroy(cwd=None):
+	with dsf.core.fs.pushd(cwd):
+		if not dsf.core.fs.has_file('Vagrantfile'):
+			raise RuntimeError
+
+		# shutdown the vagrant VMs
+		dsf.core.shell.run(["vagrant", "destroy", "--force"])
+
 def get_ipv4_address(cwd=None, machine="default"):
 	with dsf.core.fs.pushd(cwd):
 		# do we have a vagrant file?
