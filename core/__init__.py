@@ -1,11 +1,11 @@
-import ansible
-import console
-import fs
-import git
-import github_ssh
-import http
-import internal
-import log
-import shell
-import terminal
-import vagrant
+from . import ansible
+from . import console
+from . import fs
+from . import git
+from . import github_ssh
+from . import http
+from . import internal
+from . import log
+from . import shell
+from . import terminal
+from . import vagrant
