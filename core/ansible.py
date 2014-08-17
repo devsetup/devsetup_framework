@@ -1,7 +1,7 @@
 # -*- coding:utf8 -*-
 
 '''
-dsf module for working with Ansible
+dsf core module for working with Ansible
 
 @author: Stuart Herbert <stuart@stuartherbert.com>
 
@@ -37,6 +37,8 @@ def run_playbook(inv, private_key=None, user=None, cwd=None, playbook="site.yml"
 	Runs the 'ansible-playbook' command against the inventory that you
 	defined when you called dsf.core.ansible.create_inventory().
 
+	Params:
+
 	* private_key: path to the SSH key to use to log into hosts defined
 	  in the inventory
 
@@ -48,7 +50,6 @@ def run_playbook(inv, private_key=None, user=None, cwd=None, playbook="site.yml"
 	* playbook: the playbook to run Ansible against. This is normally
 	  your 'site.yml' file, but it can be a different <play.yml> file if
 	  you prefer for whatever reason.
-
 	"""
 	# make sure the inventory exists on disk
 	inv.persist()
