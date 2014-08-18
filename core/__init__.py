@@ -9,3 +9,4 @@ from . import log
 from . import shell
 from . import terminal
 from . import vagrant
+from . import virtualbox
