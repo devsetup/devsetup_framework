@@ -46,3 +46,12 @@ def get_ipv4_address(cwd=None, machine="default"):
 
 		# if we get here, no IP address found
 		raise RuntimeError("unable to determine IP address")
+
+def run_command(cmd, cwd=None, machine="default", ignore_errors=False):
+	with dsf.core.fs.pushd(cwd):
+		if not dsf.core.fs.has_file('Vagrantfile'):
+			raise RuntimeError
+
+		retval = dsf.core.shell.run(["vagrant", "ssh", "-c", cmd, machine ])
+		if retval != 0 and not ignore_errors:
+			raise RuntimeError("command inside VM failed")
