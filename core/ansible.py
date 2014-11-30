@@ -62,7 +62,7 @@ def run_playbook(inv, private_key=None, user=None, cwd=None, playbook="site.yml"
 		cmd = cmd + [ "--user", user ]
 	cmd = cmd + [ playbook ]
 
-	retval = dsf.core.shell.run(cmd, cwd=cwd)
+	retval = dsf.shell.run(cmd, cwd=cwd)
 	if retval != 0:
 		raise RuntimeError("Ansible provisioning failed")
 

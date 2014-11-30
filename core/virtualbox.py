@@ -4,7 +4,7 @@ import dsf
 
 def find_bridge_adapter():
 	# ask virtualbox for a list of bridgeable adapters
-	output = dsf.core.shell.get_output_from_command(["VBoxManage",  "list", "bridgedifs"])
+	output = dsf.shell.get_output_from_command(["VBoxManage",  "list", "bridgedifs"])
 
 	# we're going to need some help to understand the output
 	iface_regex = re.compile(r'Name:[\s]+(.*)')
