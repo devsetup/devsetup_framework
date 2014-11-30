@@ -39,4 +39,15 @@ def run(cmd, cwd=None):
 
 def run_with_passthru(cmd, cwd=None):
 	with dsf.core.fs.pushd(cwd):
-		subprocess.call(cmd)
+		# make sure there is a record of what we are doing
+		dsf.core.log.log_command_start(cmd)
+
+		# run the command
+		retval = subprocess.call(cmd)
+
+		# make sure there's a record of the command's exit code
+		dsf.core.log.log_command_result(retval)
+
+		# let the caller raise the exception - it makes things much
+		# easier to understand when looking at the logs
+		return retval
