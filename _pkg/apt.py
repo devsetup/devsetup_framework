@@ -26,4 +26,6 @@ def install(pkg):
 	else:
 		cmd = cmd + [ pkg ]
 
-	dsf.core.shell.run(cmd)
+	retval = dsf.shell.run(cmd)
+	if retval != 0:
+		raise RuntimeError
