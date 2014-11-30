@@ -1,11 +1,6 @@
-# standard library includes
-import os
+import core
+import net
+import pkg
 
-from core import log
-from Step import Step
-
-def init(parent_file, write_to_log=True):
-	log.init(os.path.dirname(parent_file), write_to_log)
-
-def step(msg):
-	return Step(msg)
+from .init import init
+from .step import step
