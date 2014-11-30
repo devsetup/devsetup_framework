@@ -1,8 +1,7 @@
-from .cmd import *
+from ._cmd import *
 import core
-from .log import *
-from .net import *
-from .pkg import *
+from ._log import *
+from ._net import *
+from ._pkg import *
 
-from .init import init
-from .step import step
+from ._internal import init, step

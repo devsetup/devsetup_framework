@@ -8,8 +8,8 @@ from . import virtualbox
 
 # historically, these have been part of core
 # we've left them here for backwards-compatibility
-from dsf.net import http
-from dsf.cmd import shell
-from dsf.log import dslog as log
-from dsf.vcs import git
-from dsf.vcs import github_ssh
+from dsf._net import http
+from dsf._cmd import shell
+from dsf._log import dslog as log
+from dsf._vcs import git
+from dsf._vcs import github_ssh
