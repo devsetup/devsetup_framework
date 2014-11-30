@@ -1,3 +1,4 @@
+import cmd
 import core
 import net
 import pkg
