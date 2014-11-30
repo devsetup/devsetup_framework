@@ -20,7 +20,7 @@ def install(pkg):
 	  or a list of packages
 	"""
 
-	cmd = ["apt-get", "install" ]
+	cmd = ["apt-get", "install", "-y" ]
 	if type(cmd) in (tuple, list):
 		cmd = cmd + pkg
 	else:
