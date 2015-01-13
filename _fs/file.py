@@ -9,6 +9,8 @@ https://devsetup.systems/dsf-framework/
 '''
 
 import os
+import shutil
+
 import dsf
 
 def chmod(target_file, mode):
@@ -47,6 +49,39 @@ def chmod(target_file, mode):
 
 	os.chmod(target_file, mode)
 	dsf.dslog.log_command_result(0)
+
+def copy(source_file, target_file, mode=0644):
+	"""
+	Copys source_file to target_file
+
+	Params:
+
+	* source_file: the file to copy
+
+	* target_file: where to copy the source_file to
+
+	* mode: the file permissions to set on the new file
+
+	Raises RuntimeError when:
+
+	a) 'source_file' does not exist
+	b) cannot create 'target_file'
+	c) you do not have permission to chmod 'target_file'
+	"""
+	dsf.dslog.log_command_start(['copy', source_file, target_file, oct(mode)])
+	if not os.path.exists(source_file):
+		dsf.dslog.log_command_output(["source file not found"])
+		dsf.dslog.log_command_result(1)
+		raise RuntimeError
+
+	try:
+		shutil.copy(source_file, target_file)
+	except IOError:
+		dsf.dslog.log_command_output(["failed to copy to target file"])
+		dsf.dslog.log_command_result(1)
+		raise RuntimeError
+
+	chmod(target_file, mode)
 
 def has_file(target_file):
 	"""
