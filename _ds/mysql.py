@@ -19,6 +19,36 @@ class MySQLServer(object):
 		self.user = user
 		self.password = password
 
+		# time-saving helper: mysql command
+		cmd=["mysql"]
+		if server.host is not None:
+			cmd.append("-h")
+			cmd.append(server.host)
+		if server.port is not None:
+			cmd.append("--port")
+			cmd.append(str(server.port))
+		cmd.append("-u")
+		cmd.append(server.user)
+		if server.password is not None:
+			cmd.append("-p")
+			cmd.append(server.password)
+		self.mysql_command = cmd
+
+		# time-saving helper: mysqladmin command
+		cmd=["mysqladmin"]
+		if server.host is not None:
+			cmd.append("-h")
+			cmd.append(server.host)
+		if server.port is not None:
+			cmd.append("--port")
+			cmd.append(str(server.port))
+		cmd.append("-u")
+		cmd.append(server.user)
+		if server.password is not None:
+			cmd.append("-p")
+			cmd.append(server.password)
+		self.mysqladmin_command = cmd
+
 	def __enter__(self):
 		return self
 
@@ -28,6 +58,14 @@ class MySQLServer(object):
 
 def server(host=None, port=None, user="root", password=None):
 	return MySQLServer(host, port, user, password)
+
+def create_database(server, db_name):
+	cmd = server.mysqladmin_command
+	cmd.append("create")
+	cmd.append(db_name)
+
+	if dsf.shell.run(cmd) is not 0:
+		raise RuntimeError
 
 def run_sql_from_file(server, source_file):
 	"""
@@ -50,22 +88,12 @@ def run_sql_from_file(server, source_file):
 		raise RuntimeError
 
 	# build the command to execute
-	cmd=["mysql"]
-	if server.host is not None:
-		cmd.append("-h")
-		cmd.append(server.host)
-	if server.port is not None:
-		cmd.append("--port")
-		cmd.append(str(server.port))
-	cmd.append("-u")
-	cmd.append(server.user)
-	if server.password is not None:
-		cmd.append("-p")
-		cmd.append(server.password)
+	cmd=server.mysql_command
 	cmd.append("<")
 	cmd.append(source_file)
 
-	dsf.shell.run(cmd)
+	if dsf.shell.run(cmd) is not 0:
+		raise RuntimeError
 
 def chmod(target_file, mode):
 	"""
