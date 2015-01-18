@@ -10,7 +10,7 @@ def get_output_from_command(cmd, cwd=None):
 		dsf.dslog.log_command_start(cmd)
 
 		# run the command
-		p1 = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		p1 = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
 		# get the output
 		output = p1.communicate()
@@ -28,7 +28,7 @@ def run(cmd, cwd=None):
 		dsf.dslog.log_command_start(cmd)
 
 		# run the command
-		retval = subprocess.call(cmd, stdout=dsf.core.log.LOG_STDOUT, stderr=dsf.core.log.LOG_STDERR)
+		retval = subprocess.call(cmd, stdout=dsf.core.log.LOG_STDOUT, stderr=dsf.core.log.LOG_STDERR, shell=True)
 
 		# make sure there's a record of the command's exit code
 		dsf.dslog.log_command_result(retval)
@@ -43,7 +43,7 @@ def run_with_passthru(cmd, cwd=None):
 		dsf.dslog.log_command_start(cmd)
 
 		# run the command
-		retval = subprocess.call(cmd)
+		retval = subprocess.call(cmd, shell=True)
 
 		# make sure there's a record of the command's exit code
 		dsf.dslog.log_command_result(retval)
