@@ -76,7 +76,7 @@ def get_realpath(target_dir):
 
 def mkdir(target_dir, mode=0755, owner="root", group="root"):
 	dsf.dslog.log_command_start(["mkdir", "-p", target_dir])
-	os.mkdirs(target_dir, mode)
+	os.makedirs(target_dir, mode)
 	dsf.dslog.log_command_result(0)
 
 	dsf.shell.run(["chown", "%s:%s" % (owner, group), target_dir])
