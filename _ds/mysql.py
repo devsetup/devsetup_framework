@@ -67,7 +67,7 @@ def create_database(server, db_name):
 	if dsf.shell.run(cmd) is not 0:
 		raise RuntimeError
 
-def run_sql_from_file(server, source_file):
+def run_sql_from_file(server, database, source_file):
 	"""
 	Executes SQL stored in a file on disk.
 
@@ -76,6 +76,8 @@ def run_sql_from_file(server, source_file):
 	Params:
 
 	* server: the MySQLServer class returned from dsf.mysql.server()
+
+	* database: the database to run the source_file against
 
 	* source_file: the file containing the SQL to run
 
@@ -89,6 +91,7 @@ def run_sql_from_file(server, source_file):
 
 	# build the command to execute
 	cmd=server.mysql_command
+	cmd.append(database)
 	cmd.append("<")
 	cmd.append(source_file)
 
