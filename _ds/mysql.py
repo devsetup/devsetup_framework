@@ -138,7 +138,7 @@ def run_sql_from_file(server, database, source_file):
 		raise RuntimeError
 
 
-def run_sql_from_gzipped_file(server, database, source_file):
+def run_sql_from_compressed_file(server, database, source_file):
 	"""
 	Executes SQL stored in a file on disk.
 
@@ -150,7 +150,7 @@ def run_sql_from_gzipped_file(server, database, source_file):
 
 	* database: the database to run the source_file against
 
-	* source_file: the file containing the SQL to run
+	* source_file: the compressed file containing the SQL to run
 
 	Raises RuntimeError when:
 
@@ -161,7 +161,7 @@ def run_sql_from_gzipped_file(server, database, source_file):
 		raise RuntimeError
 
 	# build the command to execute
-	cmd=["gzcat", source_file, "|"]
+	cmd=["zcat", source_file, "|"]
 	cmd=cmd + server.mysql_command()
 	cmd.append(database)
 
