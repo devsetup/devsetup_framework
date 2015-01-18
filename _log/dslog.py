@@ -53,6 +53,10 @@ def convert_command_to_string(cmd):
 	# all done
 	return retval
 
+def flush():
+	LOG_STDOUT.flush()
+	LOG_STDERR.flush()
+
 def log_command_output(output):
 	global LOG_STDOUT
 
