@@ -81,7 +81,7 @@ def create_database(server, db_name):
 def database_exists(server, db_name):
 	cmd = server.mysql_command()
 	cmd.append("-e")
-	cmd.append("use %s" % db_name)
+	cmd.append("'use %s'" % db_name)
 	retval = dsf.shell.run(cmd)
 	if retval is 0:
 		return True
@@ -118,6 +118,37 @@ def run_sql_from_file(server, database, source_file):
 	cmd.append(database)
 	cmd.append("<")
 	cmd.append(source_file)
+
+	if dsf.shell.run(cmd) is not 0:
+		raise RuntimeError
+
+
+def run_sql_from_gzipped_file(server, database, source_file):
+	"""
+	Executes SQL stored in a file on disk.
+
+	A handy wrapper for calling the 'mysql' command.
+
+	Params:
+
+	* server: the MySQLServer class returned from dsf.mysql.server()
+
+	* database: the database to run the source_file against
+
+	* source_file: the file containing the SQL to run
+
+	Raises RuntimeError when:
+
+	a) 'source_file' does not exist
+	b) 'source_file' does not execute successfully
+	"""
+	if not os.path.isfile(source_file):
+		raise RuntimeError
+
+	# build the command to execute
+	cmd=["gzcat", source_file, "|"]
+	cmd=cmd + server.mysql_command()
+	cmd.append(database)
 
 	if dsf.shell.run(cmd) is not 0:
 		raise RuntimeError
