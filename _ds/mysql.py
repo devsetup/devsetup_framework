@@ -91,6 +91,16 @@ def database_exists(server, db_name):
 	raise RuntimeError("unexpected response from mysql command")
 
 
+def database_is_empty(server, db_name):
+	cmd = server.mysql_command()
+	cmd.append(db_name)
+	cmd.append("-e")
+	cmd.append("'show tables;'")
+
+	output = dsf.shell.get_output_from_command(cmd)
+	print output
+
+
 def run_sql_from_file(server, database, source_file):
 	"""
 	Executes SQL stored in a file on disk.
