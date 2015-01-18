@@ -59,6 +59,8 @@ def log_command_output(output):
 	for line in output:
 		LOG_STDOUT.write(unicode(line))
 
+	LOG_STDOUT.flush()
+
 def log_command_start(cmd):
 	global LOG_STDOUT
 
@@ -78,6 +80,7 @@ def log_comment(msg):
 
 	if logging_to_file:
 		LOG_STDOUT.write(unicode("# " + msg + "\n"))
+		LOG_STDOUT.flush()
 
 def log_comment_result(msg):
 	global LOG_STDOUT
@@ -85,12 +88,14 @@ def log_comment_result(msg):
 
 	if logging_to_file:
 		LOG_STDOUT.write(unicode("# ... " + msg + "\n\n"))
+		LOG_STDOUT.flush()
 
 def log_last_exception():
 	if logging_to_file:
 		LOG_STDOUT.write(unicode("This resulted in the following exception:\n\n"))
 		output = traceback.format_exc()
 		LOG_STDOUT.write(unicode(output))
+		LOG_STDOUT.flush()
 
 def log_new_operation(operation):
 	global LOG_STDOUT
@@ -99,6 +104,7 @@ def log_new_operation(operation):
 	if logging_to_file:
 		LOG_STDOUT.write(unicode("# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n"))
 		LOG_STDOUT.write(unicode("# " + operation + "\n\n"))
+		LOG_STDOUT.flush()
 
 def log_operation_okay(operation):
 	global LOG_STDOUT
@@ -107,6 +113,7 @@ def log_operation_okay(operation):
 	if logging_to_file:
 		LOG_STDOUT.write(unicode("# OKAY: " + operation + "\n"))
 		LOG_STDOUT.write(unicode("# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n"))
+		LOG_STDOUT.flush()
 
 def log_operation_failed(operation):
 	global LOG_STDOUT
@@ -115,6 +122,7 @@ def log_operation_failed(operation):
 	if logging_to_file:
 		LOG_STDOUT.write(unicode("# FAILED: " + operation + "\n"))
 		LOG_STDOUT.write(unicode("# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n"))
+		LOG_STDOUT.flush()
 
 def log_operation_skipped(operation):
 	global LOG_STDOUT
@@ -123,3 +131,4 @@ def log_operation_skipped(operation):
 	if logging_to_file:
 		LOG_STDOUT.write(unicode("# SKIPPED: " + operation + "\n"))
 		LOG_STDOUT.write(unicode("# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n"))
+		LOG_STDOUT.flush()
