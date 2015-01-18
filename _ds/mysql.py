@@ -60,6 +60,11 @@ def server(host=None, port=None, user="root", password=None):
 	return MySQLServer(host, port, user, password)
 
 def create_database(server, db_name):
+	# do not try to create something that's already there
+	if database_exists(server, db_name):
+		return
+
+	# if we get here, we need to create the database
 	cmd = server.mysqladmin_command
 	cmd.append("create")
 	cmd.append(db_name)
