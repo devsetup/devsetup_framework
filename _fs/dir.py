@@ -74,6 +74,14 @@ def get_realpath(target_dir):
 
 	return os.path.realpath(target_dir)
 
+def mkdir(target_dir, mode=0755, owner="root", group="root"):
+	dsf.dslog.log_command_start(["mkdir", "-p", target_dir])
+	os.mkdirs(target_dir, mode)
+	dsf.dslog.log_command_result(0)
+
+	dsf.shell.run(["chown", "%s:%s" % (owner, group), target_dir])
+
+
 def require_readable_folder(target_dir):
 	"""
 	Check to see if a folder exists on disk, and is readable. If it
