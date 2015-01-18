@@ -5,12 +5,15 @@ import subprocess
 import dsf
 
 def get_output_from_command(cmd, cwd=None):
+	# what is the command we are actually going to run?
+	cmd_to_run = _command_to_string(cmd)
+
 	with dsf.core.fs.pushd(cwd):
 		# make sure there is a record of what we are doing
-		dsf.dslog.log_command_start(cmd)
+		dsf.dslog.log_command_start(cmd_to_run)
 
 		# run the command
-		p1 = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		p1 = subprocess.Popen(cmd_to_run, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 		# get the output
 		output = p1.communicate()
@@ -40,12 +43,15 @@ def run(cmd, cwd=None):
 		return retval
 
 def run_with_passthru(cmd, cwd=None):
+	# what is the command we are actually going to run?
+	cmd_to_run = _command_to_string(cmd)
+
 	with dsf.core.fs.pushd(cwd):
 		# make sure there is a record of what we are doing
-		dsf.dslog.log_command_start(cmd)
+		dsf.dslog.log_command_start(cmd_to_run)
 
 		# run the command
-		retval = subprocess.call(cmd)
+		retval = subprocess.call(cmd_to_run)
 
 		# make sure there's a record of the command's exit code
 		dsf.dslog.log_command_result(retval)
