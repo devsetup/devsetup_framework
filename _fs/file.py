@@ -15,7 +15,7 @@ import time
 import dsf
 
 def file_pair(source_file, target_file, cache_for=3600, cwd=None):
-	retval = FilePair(source_file, target_file, cache_for=cached_for, cwd=cwd)
+	retval = FilePair(source_file, target_file, cache_for=cache_for, cwd=cwd)
 	return retval
 
 
