@@ -58,10 +58,11 @@ def _command_to_string(cmd):
 	# as Python's subprocess module is utterly fucked when using shell=True,
 	# we have to emulate the correct behaviour ourselves
 
-	cmd_string="'"
+	cmd_string=""
 	for param in cmd:
-		cmd_string = cmd_string + param + " "
-	cmd_string = cmd_string + "'"
+		if len(cmd_string) > 0:
+			cmd_string = cmd_string + " "
+		cmd_string = cmd_string + param
 
 	retval=["/bin/bash", "-c", cmd_string]
 	return retval
