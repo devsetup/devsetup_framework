@@ -67,6 +67,19 @@ def create_database(server, db_name):
 	if dsf.shell.run(cmd) is not 0:
 		raise RuntimeError
 
+def database_exists(server, db_name):
+	cmd = server.mysql_command
+	cmd.append("-e")
+	cmd.append("'use %s'" % db_name)
+	retval = dsf.shell.run(cmd)
+	if retval is 0:
+		return True
+	if retval is 1:
+		return False
+
+	raise RuntimeError("unexpected response from mysql command")
+
+
 def run_sql_from_file(server, database, source_file):
 	"""
 	Executes SQL stored in a file on disk.
