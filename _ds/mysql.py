@@ -21,32 +21,32 @@ class MySQLServer(object):
 
 		# time-saving helper: mysql command
 		cmd=["mysql"]
-		if server.host is not None:
+		if self.host is not None:
 			cmd.append("-h")
-			cmd.append(server.host)
-		if server.port is not None:
+			cmd.append(self.host)
+		if self.port is not None:
 			cmd.append("--port")
-			cmd.append(str(server.port))
+			cmd.append(str(self.port))
 		cmd.append("-u")
-		cmd.append(server.user)
-		if server.password is not None:
+		cmd.append(self.user)
+		if self.password is not None:
 			cmd.append("-p")
-			cmd.append(server.password)
+			cmd.append(self.password)
 		self.mysql_command = cmd
 
 		# time-saving helper: mysqladmin command
 		cmd=["mysqladmin"]
-		if server.host is not None:
+		if self.host is not None:
 			cmd.append("-h")
-			cmd.append(server.host)
-		if server.port is not None:
+			cmd.append(self.host)
+		if self.port is not None:
 			cmd.append("--port")
-			cmd.append(str(server.port))
+			cmd.append(str(self.port))
 		cmd.append("-u")
-		cmd.append(server.user)
-		if server.password is not None:
+		cmd.append(self.user)
+		if self.password is not None:
 			cmd.append("-p")
-			cmd.append(server.password)
+			cmd.append(self.password)
 		self.mysqladmin_command = cmd
 
 	def __enter__(self):
