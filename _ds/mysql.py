@@ -98,7 +98,12 @@ def database_is_empty(server, db_name):
 	cmd.append("'show tables;'")
 
 	output = dsf.shell.get_output_from_command(cmd)
-	print output
+	has_tables=False
+	for line in output:
+		if line is not "":
+			has_tables=True
+
+	return has_tables
 
 
 def run_sql_from_file(server, database, source_file):
