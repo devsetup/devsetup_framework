@@ -75,9 +75,16 @@ def get_realpath(target_dir):
 	return os.path.realpath(target_dir)
 
 def mkdir(target_dir, mode=0755, owner="root", group="root"):
-	dsf.dslog.log_command_start(["mkdir", "-p", target_dir])
-	os.makedirs(target_dir, mode)
-	dsf.dslog.log_command_result(0)
+	# does the target_dir already exist?
+	if not os.path.isdir(target_dir):
+		dsf.dslog.log_command_start(["mkdir", "-p", target_dir])
+		os.makedirs(target_dir, mode)
+		dsf.dslog.log_command_result(0)
+	else:
+		# make sure it has the correct mode
+		dsf.dslog.log_command_start(["chmod", oct(mode), target_dir])
+		os.chmod(target_dir, mode)
+		dsf.dslog.log_command_result(0)
 
 	dsf.shell.run(["chown", "%s:%s" % (owner, group), target_dir])
 
