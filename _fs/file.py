@@ -10,6 +10,7 @@ https://devsetup.systems/dsf-framework/
 
 import os
 import shutil
+import time
 
 import dsf
 
@@ -82,6 +83,18 @@ def copy(source_file, target_file, mode=0644):
 		raise RuntimeError
 
 	chmod(target_file, mode)
+
+def gunzip(source_file, target_file, cwd=None, cache=360, force=False):
+	# is the file too new to overwrite?
+	if not force:
+		if os.path.isfile(target_file):
+			details = os.stat(target_file)
+			if details.st_mtime > time.time() - cache:
+				return
+
+	# uncompress the file
+	if dsf.shell.run(["gunzip", "-f", source_file, target_file]) is not 0:
+		raise RuntimeError
 
 def has_file(target_file):
 	"""
