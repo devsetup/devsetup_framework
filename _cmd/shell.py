@@ -33,7 +33,7 @@ def run(cmd, cwd=None):
 		dsf.dslog.log_command_start(cmd_to_run)
 
 		# run the command
-		retval = subprocess.call(cmd_to_run, stdout=dsf.core.log.LOG_STDOUT, stderr=dsf.core.log.LOG_STDERR)
+		retval = subprocess.call(cmd_to_run, stdout=dsf.dslog.LOG_STDOUT, stderr=dsf.dslog.LOG_STDERR)
 
 		# make sure there's a record of the command's exit code
 		dsf.dslog.log_command_result(retval)
