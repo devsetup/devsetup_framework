@@ -92,7 +92,7 @@ def copy(source_file, target_file, mode=0644):
 
 def gunzip(source_file, cwd=None, cache=360, force=False):
 	with dsf.dir.pushd(cwd):
-		target_file=os.path.splitext()[0]
+		target_file=os.path.splitext(source_file)[0]
 
 		# is the file too new to overwrite?
 		if not force:
