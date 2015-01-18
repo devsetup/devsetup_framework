@@ -20,7 +20,10 @@ def create_user(username, groups=None):
 
 
 def user_exists(username):
-	if pwd.getpwnam(username) is None:
-		return False
+	try:
+		if pwd.getpwnam(username) is None:
+			return False
 
-	return True
+		return True
+	except KeyError:
+		return False
