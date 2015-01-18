@@ -75,7 +75,7 @@ def create_database(server, db_name):
 def database_exists(server, db_name):
 	cmd = server.mysql_command
 	cmd.append("-e")
-	cmd.append("'use %s'" % db_name)
+	cmd.append("use %s" % db_name)
 	retval = dsf.shell.run(cmd)
 	if retval is 0:
 		return True
