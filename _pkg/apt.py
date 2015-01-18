@@ -27,9 +27,10 @@ def install(pkg):
 	# build the command to run apt
 	cmd = ["apt-get", "install", "-y" ]
 	if type(cmd) in (tuple, list):
-		cmd = cmd + pkg
+		for pkg in cmd:
+			cmd.append(pkg)
 	else:
-		cmd = cmd + [ pkg ]
+		cmd.append(pkg)
 
 	# run the command, and make sure it worked
 	retval = dsf.shell.run(cmd)
