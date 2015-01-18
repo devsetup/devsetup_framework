@@ -14,8 +14,8 @@ import time
 
 import dsf
 
-def file_pair(source_file, target_file, cached_for=3600, cwd=None):
-	retval = FilePair(source_file, target_file, cached_for=cached_for, cwd=cwd)
+def file_pair(source_file, target_file, cache_for=3600, cwd=None):
+	retval = FilePair(source_file, target_file, cache_for=cached_for, cwd=cwd)
 	return retval
 
 
@@ -199,15 +199,15 @@ def require_readable_file(target_file):
 
 
 class FilePair(object):
-	def __init__(self, source_file, target_file, cached_for=None, cwd=None):
+	def __init__(self, source_file, target_file, cache_for=None, cwd=None):
 		# remember our constructor params
 		self.source_file = source_file
 		self.target_file = target_file
-		self.cached_for = cached_for
+		self.cache_for = cache_for
 		self.cwd = cwd
 
 		# gather facts about our file pair
-		self.is_cached = is_cached(source_file=source_file, target_file=target_file, cached_for=cached_for, cwd=cwd)
+		self.is_cached = is_cached(source_file=source_file, target_file=target_file, cache_for=cache_for, cwd=cwd)
 
 		# work out whether the caller needs to act or not
 		self.act = True
