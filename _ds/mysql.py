@@ -108,47 +108,10 @@ def run_sql_from_file(server, database, source_file):
 		raise RuntimeError
 
 	# build the command to execute
-	cmd=server.mysql_command
+	cmd=server.mysql_command()
 	cmd.append(database)
 	cmd.append("<")
 	cmd.append(source_file)
 
 	if dsf.shell.run(cmd) is not 0:
 		raise RuntimeError
-
-def chmod(target_file, mode):
-	"""
-	Sets the UNIX permissions on a file or a folder.
-
-	Mimics the chmod(1) command available in your UNIX shell.  Very
-	handy for making files executable after you've downloaded them, for
-	example.
-
-	Params:
-
-	* target_file: the path of the file/folder to chmod
-
-	* mode: an octal number
-
-	Raises RuntimeError when:
-
-	a) 'target_file' does not exist
-	b) you don't have permission to chmod 'target_file'
-
-	TODO:
-
-	* Accept 'rwxs'-type text version of the 'mode' param.
-
-	  This would help users who aren't comfortable with the UNIX octal
-	  mode values. Would probably make their code a little more readable
-	  too.
-	"""
-	# does the target_file actually exist?
-	dsf.dslog.log_command_start(['chmod', oct(mode), target_file])
-	if not os.path.exists(target_file):
-		dsf.dslog.log_command_output(["no such file"])
-		dsf.dslog.log_command_result(1)
-		raise RuntimeError
-
-	os.chmod(target_file, mode)
-	dsf.dslog.log_command_result(0)
