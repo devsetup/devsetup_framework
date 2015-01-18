@@ -26,9 +26,9 @@ def install(pkg):
 
 	# build the command to run apt
 	cmd = ["apt-get", "install", "-y" ]
-	if type(cmd) in (tuple, list):
-		for pkg in cmd:
-			cmd.append(pkg)
+	if type(pkg) in (tuple, list):
+		for pkg_name in pkg:
+			cmd.append(pkg_name)
 	else:
 		cmd.append(pkg)
 
