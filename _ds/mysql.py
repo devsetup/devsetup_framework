@@ -32,7 +32,7 @@ class MySQLServer(object):
 		if self.password is not None:
 			cmd.append("-p")
 			cmd.append(self.password)
-		self.mysql_command = cmd
+		self._mysql_command = cmd
 
 		# time-saving helper: mysqladmin command
 		cmd=["mysqladmin"]
@@ -47,7 +47,7 @@ class MySQLServer(object):
 		if self.password is not None:
 			cmd.append("-p")
 			cmd.append(self.password)
-		self.mysqladmin_command = cmd
+		self._mysqladmin_command = cmd
 
 	def __enter__(self):
 		return self
@@ -55,6 +55,12 @@ class MySQLServer(object):
 	def __exit__(self, type, value, traceback):
 		if type is None:
 			pass
+
+	def mysql_command(self):
+		return self._mysql_command[:]
+
+	def mysqladmin_command(self):
+		return self._mysqladmin_command[:]
 
 def server(host=None, port=None, user="root", password=None):
 	return MySQLServer(host, port, user, password)
@@ -65,7 +71,7 @@ def create_database(server, db_name):
 		return
 
 	# if we get here, we need to create the database
-	cmd = server.mysqladmin_command
+	cmd = server.mysqladmin_command()
 	cmd.append("create")
 	cmd.append(db_name)
 
@@ -73,7 +79,7 @@ def create_database(server, db_name):
 		raise RuntimeError
 
 def database_exists(server, db_name):
-	cmd = server.mysql_command
+	cmd = server.mysql_command()
 	cmd.append("-e")
 	cmd.append("use %s" % db_name)
 	retval = dsf.shell.run(cmd)
