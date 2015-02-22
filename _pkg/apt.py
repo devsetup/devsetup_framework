@@ -36,3 +36,21 @@ def install(pkg):
 	retval = dsf.shell.run(cmd)
 	if retval != 0:
 		raise RuntimeError("apt-get install failed")
+
+def update():
+	cmd = ["apt-get", "update"]
+	retval = dsf.shell.run(cmd)
+	if retval != 0:
+		raise RuntimeError("apt-get update failed")
+
+def upgrade():
+	# make sure we force non-interactive mode for apt (grrr)
+	os.environ["DEBIAN_FRONTEND"] = "noninteractive"
+
+	# build the command to run
+	cmd = ["apt-get", "upgrade", "-y"]
+
+	# run the command, and make sure it worked
+	retval = dsf.shell.run(cmd)
+	if retval != 0:
+		raise RuntimeError("apt-get upgrade failed")
